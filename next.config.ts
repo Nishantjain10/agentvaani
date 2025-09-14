@@ -1,64 +1,37 @@
 import type { NextConfig } from 'next';
-import withBundleAnalyzer from '@next/bundle-analyzer';
-import { withSentryConfig } from '@sentry/nextjs';
+import { createRequire } from 'node:module';
 import createNextIntlPlugin from 'next-intl/plugin';
-import './src/libs/Env';
 
-// Define the base Next.js configuration
-const baseConfig: NextConfig = {
+const require = createRequire(import.meta.url);
+
+const withNextIntl = createNextIntlPlugin('./i18n.ts');
+
+// Bundle analyzer is used to see bundle size information if needed
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+/**
+ * Configuration for Next.js Application
+ */
+const nextConfig: NextConfig = {
+  // Ensure ESLint is properly configured
   eslint: {
     dirs: ['.'],
   },
-  poweredByHeader: false,
-  reactStrictMode: true,
-  outputFileTracingIncludes: {
-    '/': ['./migrations/**/*'],
+  // Experimental features (removed deprecated options)
+  // Disable source maps in development to reduce memory usage
+  productionBrowserSourceMaps: false,
+  // Handle webpack configuration
+  webpack: (config, { dev, isServer }) => {
+    // Reduce console noise in development
+    if (dev && !isServer) {
+      config.infrastructureLogging = {
+        level: 'error',
+      };
+    }
+    return config;
   },
 };
 
-// Initialize the Next-Intl plugin
-let configWithPlugins = createNextIntlPlugin('./src/libs/I18n.ts')(baseConfig);
-
-// Conditionally enable bundle analysis
-if (process.env.ANALYZE === 'true') {
-  configWithPlugins = withBundleAnalyzer()(configWithPlugins);
-}
-
-// Conditionally enable Sentry configuration
-if (!process.env.NEXT_PUBLIC_SENTRY_DISABLED) {
-  configWithPlugins = withSentryConfig(configWithPlugins, {
-    // For all available options, see:
-    // https://www.npmjs.com/package/@sentry/webpack-plugin#options
-    org: process.env.SENTRY_ORGANIZATION,
-    project: process.env.SENTRY_PROJECT,
-
-    // Only print logs for uploading source maps in CI
-    silent: !process.env.CI,
-
-    // For all available options, see:
-    // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-
-    // Upload a larger set of source maps for prettier stack traces (increases build time)
-    widenClientFileUpload: true,
-
-    // Upload a larger set of source maps for prettier stack traces (increases build time)
-    reactComponentAnnotation: {
-      enabled: true,
-    },
-
-    // Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
-    // This can increase your server load as well as your hosting bill.
-    // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
-    // side errors will fail.
-    tunnelRoute: '/monitoring',
-
-    // Automatically tree-shake Sentry logger statements to reduce bundle size
-    disableLogger: true,
-
-    // Disable Sentry telemetry
-    telemetry: false,
-  });
-}
-
-const nextConfig = configWithPlugins;
-export default nextConfig;
+export default withNextIntl(withBundleAnalyzer(nextConfig));

@@ -2,7 +2,7 @@ import type { LocalizationResource } from '@clerk/types';
 import type { LocalePrefixMode } from 'next-intl/routing';
 import { enUS, frFR } from '@clerk/localizations';
 
-const localePrefix: LocalePrefixMode = 'as-needed';
+const localePrefix: LocalePrefixMode = 'never';
 
 // FIXME: Update this configuration file based on your project information
 export const AppConfig = {

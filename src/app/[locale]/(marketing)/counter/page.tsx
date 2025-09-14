@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
-import { CounterForm } from '@/components/CounterForm';
-import { CurrentCount } from '@/components/CurrentCount';
 
 export async function generateMetadata(props: {
   params: Promise<{ locale: string }>;
@@ -25,10 +23,13 @@ export default function Counter() {
 
   return (
     <>
-      <CounterForm />
+      <div className="text-center">
+        <h1 className="text-2xl font-bold">Demo Counter</h1>
+        <p className="mt-2 text-gray-600">Demo counter functionality - using Appwrite for data storage</p>
+      </div>
 
       <div className="mt-3">
-        <CurrentCount />
+        <p className="text-center text-gray-600">Counter functionality removed - using Appwrite for data storage</p>
       </div>
 
       <div className="mt-5 text-center text-sm">

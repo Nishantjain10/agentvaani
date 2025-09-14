@@ -1,0 +1,13 @@
+{
+  "name": "transcript-analyzer-function",
+  "version": "1.0.0",
+  "description": "Appwrite function to analyze call transcripts using Gemini AI",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "node-appwrite": "^13.0.0"
+  }
+}

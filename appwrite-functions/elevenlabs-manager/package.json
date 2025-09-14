@@ -1,0 +1,13 @@
+{
+  "name": "elevenlabs-manager-function",
+  "version": "1.0.0",
+  "description": "Appwrite function to manage ElevenLabs agents and batch calls",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js"
+  },
+  "dependencies": {
+    "elevenlabs": "^1.59.0",
+    "node-appwrite": "^13.0.0"
+  }
+}

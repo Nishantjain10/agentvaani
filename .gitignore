@@ -34,6 +34,16 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
+
+# Documentation files (temporary)
+MIGRATION_SUMMARY.md
+APPWRITE_SETUP.md
+claude.md
+
+# Development artifacts
+dev
+next
 
 # Sentry Config File
 .env.sentry-build-plugin

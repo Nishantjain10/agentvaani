@@ -1,0 +1,14 @@
+{
+  "name": "call-orchestrator-function",
+  "version": "1.0.0",
+  "description": "Appwrite function to orchestrate voice calls with Gemini AI and Twilio",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "node-appwrite": "^13.0.0",
+    "twilio": "^5.3.4"
+  }
+}

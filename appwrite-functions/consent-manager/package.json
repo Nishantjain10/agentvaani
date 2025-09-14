@@ -1,0 +1,13 @@
+{
+  "name": "consent-manager-function",
+  "version": "1.0.0",
+  "description": "Appwrite function to manage customer consent via SMS and calls",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js"
+  },
+  "dependencies": {
+    "node-appwrite": "^13.0.0",
+    "twilio": "^5.3.4"
+  }
+}
