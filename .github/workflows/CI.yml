@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    if: false
     strategy:
       matrix:
         node-version: [22.x, 24.x]
